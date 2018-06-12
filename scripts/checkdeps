@@ -87,8 +87,8 @@ case "$DISTRO" in
       perl_pkg=(JSON XML-Parser)
       ;;
     arch)
-      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python)
-      deps_pkg+=(g++ xorg-mkfontscale xorg-mkfontdir xorg-bdftopcf libxslt "java-runtime-common jdk8-openjdk" python2)
+      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python xa makeinfo)
+      deps_pkg+=(g++ xorg-mkfontscale xorg-mkfontdir xorg-bdftopcf libxslt "java-runtime-common jdk8-openjdk" python2 xa texinfo)
       perl_pkg=(perl-json perl-xml-parser)
       ;;
     opensuse)
@@ -101,8 +101,8 @@ case "$DISTRO" in
       perl_pkg=(perl-JSON perl-XML-Parser)
       ;;
     *)
-      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python)
-      deps_pkg+=(g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre python)
+      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python xa makeinfo)
+      deps_pkg+=(g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre python xa65 texinfo)
       perl_pkg=(libjson-perl libxml-parser-perl)
       ;;
 esac
