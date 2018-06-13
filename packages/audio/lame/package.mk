@@ -15,9 +15,7 @@ PKG_LONGDESC="LAME originally stood for LAME Ain't an Mp3 Encoder. The goal of t
 PKG_BUILD_FLAGS="-parallel +pic"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --disable-nasm \
+PKG_CONFIGURE_OPTS_TARGET="--disable-nasm \
                            --disable-rpath \
                            --disable-cpml \
                            --disable-gtktest \
