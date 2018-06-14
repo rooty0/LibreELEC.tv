@@ -17,4 +17,14 @@ PKG_TOOLCHAIN="manual"
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/kodi/addons/
     cp -a $(get_build_dir kodi)/.$TARGET_NAME/addons/skin.estuary $INSTALL/usr/share/kodi/addons/
+
+  #add Chrome & Spotify shortcuts to menu
+  if [ ! "$OEM_APPS" = "no" -a "$PROJECT" = "Generic" ]; then
+    patch -d $INSTALL/usr/share/kodi/addons/skin.estuary -p1 < $PKG_DIR/files/estuary-app-menu.patch
+  fi
+
+  #add Emulationstation & Retroarch shortcuts to menu
+  if [ ! "$OEM_EMU" = "no" ]; then
+    patch -d $INSTALL/usr/share/kodi/addons/skin.estuary -p1 < $PKG_DIR/files/estuary-emulation-menu.patch
+  fi
 }
