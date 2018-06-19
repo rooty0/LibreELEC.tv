@@ -16,9 +16,7 @@ PKG_LONGDESC="PNG (Portable Network Graphics) is an extensible file format for t
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic +pic:host"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
-                           --enable-static \
-                           --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
