@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="boost"
-PKG_VERSION="1_65_1"
-PKG_SHA256="9807a5d16566c57fd74fb522764e0b134a8bbe6b6e8967b83afefd30dcd3be81"
+PKG_VERSION="1_67_0"
+PKG_SHA256="2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
 PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.65.1/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
@@ -44,11 +44,29 @@ makeinstall_target() {
   $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
-                          --toolset=gcc link=static \
+                          --toolset=gcc link=shared \
                           --with-chrono \
                           --with-date_time \
                           --with-filesystem \
                           --with-iostreams \
+                          --with-locale \
+                          --with-python \
+                          --with-random \
+                          --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                          --with-serialization \
+                          --with-system \
+                          --with-thread \
+                          install
+
+  $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
+                          --layout=system \
+                          --prefix=$INSTALL/usr \
+                          --toolset=gcc link=shared \
+                          --with-chrono \
+                          --with-date_time \
+                          --with-filesystem \
+                          --with-iostreams \
+                          --with-locale \
                           --with-python \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
