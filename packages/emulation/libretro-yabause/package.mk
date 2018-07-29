@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-yabause"
-PKG_VERSION="e0c0f99"
-PKG_SHA256="527e03b8b4c864096befde9ebbe7c5dbbd0917ad861eb2851f42afda587d6b06"
+PKG_VERSION="22ece9a"
+PKG_SHA256="0e37dd34365e5a34d8afe3fe3b9676ed2fe2c3079aa61b26cd162769f5fcce82"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/yabause"
@@ -24,6 +24,11 @@ make_target() {
 }
 
 makeinstall_target() {
+  if [ ! "$OEM_EMU" = "no" ]; then
+    mkdir -p $INSTALL/usr/lib/libretro
+    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
+  fi
+
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

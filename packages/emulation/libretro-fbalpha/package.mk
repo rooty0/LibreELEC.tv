@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-fbalpha"
-PKG_VERSION="9d1b3af"
-PKG_SHA256="9d42b88bc8144a1ff8495c19c1d5896949103c5ac4682e2204901d491413b2c2"
+PKG_VERSION="6f85b5d"
+PKG_SHA256="862b9f60a31a170cfb61dd5c4d37f8e7b0a22c36310f4b638b5c25ee7ae05756"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/fbalpha"
@@ -14,17 +14,31 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.fba: fba for Kodi"
 PKG_LONGDESC="game.libretro.fba: fba for Kodi"
 PKG_TOOLCHAIN="manual"
-# linking takes too long with lto
 
 PKG_LIBNAME="fbalpha_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="FBALPHA_LIB"
 
 make_target() {
-  make -f makefile.libretro
+  case $PROJECT in
+    RPi)
+      make -f makefile.libretro platform=armv CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+      ;;
+    RPi2)
+      make -f makefile.libretro platform=rpi2 CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+      ;;
+    Generic)
+      make -f makefile.libretro CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+      ;;
+  esac
 }
 
 makeinstall_target() {
+  if [ ! "$OEM_EMU" = "no" ]; then
+    mkdir -p $INSTALL/usr/lib/libretro
+    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
+  fi
+
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

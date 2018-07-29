@@ -2,9 +2,9 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-pcsx-rearmed"
-PKG_VERSION="1b86cbc"
-PKG_SHA256="b4e3463494af975c9ca38b1e539fb6bb27b46ac4899b26738b0ab5e158ec9fa9"
-PKG_ARCH="arm"
+PKG_VERSION="7124573"
+PKG_SHA256="70c305e2bc67558c80fe6a61deb5e045d2bda7aab398df6ea3849c7b3a482f96"
+PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/pcsx_rearmed"
 PKG_URL="https://github.com/libretro/pcsx_rearmed/archive/$PKG_VERSION.tar.gz"
@@ -36,13 +36,18 @@ make_target() {
     arm)
       make -f Makefile.libretro USE_DYNAREC=1
       ;;
-    x86-64)
+    x86_64)
       make -f Makefile.libretro
       ;;
   esac
 }
 
 makeinstall_target() {
+  if [ ! "$OEM_EMU" = "no" ]; then
+    mkdir -p $INSTALL/usr/lib/libretro
+    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
+  fi
+
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

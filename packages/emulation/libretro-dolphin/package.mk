@@ -2,33 +2,38 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-dolphin"
-PKG_VERSION="9ef58b5"
-PKG_SHA256="b9a040233219bdb2bfb2b67f4bc6ea63faf0b9b85bf22893408710a62df4c2da"
-PKG_ARCH="none"
+PKG_VERSION="535df63"
+PKG_SHA256="14ee4d533873b5123b3e8feb2b41495b1e51620fcbd70647e41f369214b6d744"
+PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/dolphin"
 PKG_URL="https://github.com/libretro/dolphin/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="dolphin-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain kodi-platform enet"
+PKG_DEPENDS_TARGET="toolchain kodi-platform enet bluez lzo alsa-lib ffmpeg curl libpng zlib"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC"
 PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_LIBNAME="dolphin_libretro.so"
-PKG_LIBPATH="libretro/$PKG_LIBNAME"
+PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="DOLPHIN_LIB"
 
-pre_configure_target() {
-  # fails to build in subdirs
-  cd $PKG_BUILD
-  rm -rf .$TARGET_NAME
-}
+PKG_CMAKE_OPTS_TARGET="-DENABLE_QT=OFF \
+                       -DENABLE_LTO=OFF \
+                       -DLIBRETRO=ON \
+                       -DENABLE_ANALYTICS=OFF"
 
-make_target() {
-  make -C libretro/
+pre_make_target() {
+  find . -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
 }
 
 makeinstall_target() {
+  if [ ! "$OEM_EMU" = "no" ]; then
+    mkdir -p $INSTALL/usr/lib/libretro
+    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
+  fi
+
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake
