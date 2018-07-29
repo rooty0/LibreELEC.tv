@@ -98,3 +98,8 @@
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
     DRIVER_ADDONS="crazycat digital_devices hauppauge"
+
+  # Override some RetroArch playlist core assignation
+    RA_PLAYLIST_CORES="${RA_PLAYLIST_CORES//mame2003_plus/mame2016}"
+    RA_PLAYLIST_CORES="${RA_PLAYLIST_CORES//mupen64plus/parallel_n64}"
+    RA_PLAYLIST_CORES="${RA_PLAYLIST_CORES//pcsx_rearmed/mednafen_psx}"
