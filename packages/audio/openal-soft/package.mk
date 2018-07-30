@@ -17,3 +17,9 @@ PKG_CMAKE_OPTS_TARGET="-DALSOFT_BACKEND_OSS=off \
                        -DALSOFT_EXAMPLES=off \
                        -DALSOFT_TESTS=off \
                        -DALSOFT_UTILS=off"
+
+post_makeinstall_target() {
+  mkdir -p $INSTALL/etc/openal
+  sed s/^#drivers.*/drivers=alsa/ $INSTALL/usr/share/openal/alsoftrc.sample > $INSTALL/etc/openal/alsoft.conf
+  rm -rf $INSTALL/usr/share/openal
+}
