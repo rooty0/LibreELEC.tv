@@ -3,12 +3,13 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="18.1.5"
-PKG_SHA256="69dbe6f1a6660386f5beb85d4fcf003ee23023ed7b9a603de84e9a37e8d98dea"
+PKG_VERSION="18.2.0-rc1"
+PKG_SHA256="8599b38840d21dc7fc1f89024445cb095bc323c03bd47c1297c33b623c1a7a55"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
-PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/mesa3d/mesa/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
@@ -25,7 +26,7 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
-                       -Dvulkan-drivers=intel,radeon \
+                       -Dvulkan-drivers=amd,intel \
                        -Dshader-cache=true \
                        -Dshared-glapi=true \
                        -Dopengl=true \
