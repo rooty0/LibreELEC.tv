@@ -57,6 +57,7 @@ OEM_EMU_GENERIC=" \
   vice \
   libretro-beetle-psx \
   libretro-beetle-saturn \
+  libretro-bsnes-mercury-accuracy \
   libretro-citra \
   libretro-desmume \
   libretro-dolphin \
