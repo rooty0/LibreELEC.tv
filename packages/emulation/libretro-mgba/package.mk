@@ -28,10 +28,10 @@ pre_configure_target() {
 make_target() {
   case $PROJECT in
     RPi*)
-      make -f Makefile.libretro platform=unix-armv HAVE_NEON=1
+      make -f Makefile.libretro platform=unix-armv HAVE_NEON=1 GIT_VERSION=$PKG_VERSION
       ;;
     Generic)
-      make -f Makefile.libretro
+      make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
       ;;
   esac
 }
