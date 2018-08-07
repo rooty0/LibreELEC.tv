@@ -13,10 +13,15 @@ PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="snes9x2010 for Kodi"
 PKG_LONGDESC="snes9x2010 for Kodi"
+PKG_TOOLCHAIN="manual"
 
 PKG_LIBNAME="snes9x2010_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="SNES9X2010_LIB"
+
+make_target() {
+  make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
+}
 
 makeinstall_target() {
   if [ ! "$OEM_EMU" = "no" ]; then
