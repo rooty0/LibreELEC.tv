@@ -189,12 +189,6 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   fi
 fi
 
-post_unpack(){
-if [ ! "$OEM_EMU" = "no" ]; then
-    cp $PKG_DIR/files/* $PKG_BUILD/addons/skin.estuary/media/
-fi
-}
-
 KODI_LIBDVD="$KODI_DVDCSS \
              -DLIBDVDNAV_URL=$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
              -DLIBDVDREAD_URL=$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
@@ -237,6 +231,16 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_OPTICAL \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
+
+post_unpack(){
+  if [ ! "$OEM_APPS" = "no" ] && [ "$PROJECT" = "Generic" ]; then
+    cp $PKG_DIR/files/app-menu-icons/* $PKG_BUILD/addons/skin.estuary/media/
+  fi
+
+  if [ ! "$OEM_EMU" = "no" ]; then
+    cp $PKG_DIR/files/emu-menu-icons/* $PKG_BUILD/addons/skin.estuary/media/
+  fi
+}
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
