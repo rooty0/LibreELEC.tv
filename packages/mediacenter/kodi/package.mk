@@ -189,6 +189,12 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   fi
 fi
 
+post_unpack(){
+if [ ! "$OEM_EMU" = "no" ]; then
+    cp $PKG_DIR/files/* $PKG_BUILD/addons/skin.estuary/media/
+fi
+}
+
 KODI_LIBDVD="$KODI_DVDCSS \
              -DLIBDVDNAV_URL=$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
              -DLIBDVDREAD_URL=$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
