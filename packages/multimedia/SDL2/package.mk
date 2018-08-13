@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="SDL2"
-PKG_VERSION="31b032b"
-PKG_SHA256="9f427274936b62d498edb5f0aebeb0d71d2d9d84780c9cff26bb4c1b6ce61ec8"
+PKG_VERSION="5733323"
+PKG_SHA256="b4ad510e93224ef557090660fe534dbf598336624b68aa354a1d5dd7075a49e3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
