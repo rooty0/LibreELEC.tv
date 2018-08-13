@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-reicast"
-PKG_VERSION="59d721c"
-PKG_SHA256="17fa8ee75a25789e8fa408dfdbae100b52619a6ab5cde7581c79edc6ec3b89b3"
+PKG_VERSION="aec479a"
+PKG_SHA256="56bf9ce787aaae917ace8ab7df21519ec468112e2b33fc2eac4fa6d541a55711"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/reicast-emulator"
@@ -20,6 +20,10 @@ PKG_LIBNAME="reicast_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="REICAST_LIB"
 
+pre_make_target() {
+ export BUILD_SYSROOT=$SYSROOT_PREFIX
+}
+
 make_target() {
   case $DEVICE in
     RPi)
@@ -33,10 +37,10 @@ make_target() {
   if [ "$ARCH" = "x86_64" ]; then
       rm -rf tmp/*.so
       mkdir -p tmp
-      make AS=${AS} CC_AS=${AS} GIT_VERSION=$PKG_VERSION
+      make AS=${AS} CC_AS=${AS} HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION
       mv *.so tmp
       make clean
-      make AS=${AS} CC_AS=${AS} HAVE_OIT=1 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH
+      make AS=${AS} CC_AS=${AS} HAVE_OPENMP=0 HAVE_OIT=1 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH
       mv tmp/*.so .
   fi
 }
