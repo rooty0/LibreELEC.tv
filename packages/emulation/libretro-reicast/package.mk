@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-reicast"
-PKG_VERSION="6018c99"
-PKG_SHA256="14417b8c0ef7f3f6fcf311e647d42b026b28d626dac3d69b7aee066e92e1f338"
+PKG_VERSION="bd2b7f0"
+PKG_SHA256="67bdcf228f0ea3a6b87d9f5de33d504d339c04ec6f4cdcea95fe5206f6734ca2"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/reicast-emulator"
@@ -27,10 +27,10 @@ pre_make_target() {
 make_target() {
   case $DEVICE in
     RPi)
-      make GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH FORCE_GLES=1 platform=rpi
+      make FORCE_GLES=1 HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH platform=rpi
       ;;
     RPi2)
-      make GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH FORCE_GLES=1 platform=rpi2
+      make FORCE_GLES=1 HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH platform=rpi2
       ;;
   esac
 

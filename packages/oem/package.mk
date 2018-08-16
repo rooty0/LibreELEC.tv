@@ -47,6 +47,7 @@ OEM_EMU_COMMON=" \
   libretro-pcsx-rearmed \
   libretro-prboom \
   libretro-fceumm \
+  libretro-reicast \
   libretro-samples \
   libretro-scummvm \
   libretro-tyrquake"
@@ -66,7 +67,6 @@ OEM_EMU_GENERIC=" \
   libretro-mame2016 \
   libretro-mesen \
   libretro-parallel-n64 \
-  libretro-reicast \
   libretro-snes9x"
 
 OEM_EMU_RPI=" \
