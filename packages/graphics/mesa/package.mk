@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="18.2.0-rc3"
-PKG_SHA256="f5d535e573657f170c91ba8e74b8950b94d91f1cd8aae042c96f841a0bd38ba1"
+PKG_VERSION="18.2.0-rc4"
+PKG_SHA256="417e6f0afcb2bf5d7034b4a7589123f9c2bb6f00726a080e317eb4fa2c8af8c9"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
@@ -38,7 +38,6 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dlibunwind=false \
                        -Dlmsensors=false \
                        -Dbuild-tests=false \
-                       -Dtexture-float=true \
                        -Dselinux=false \
                        -Dosmesa=none"
 
