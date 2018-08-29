@@ -17,6 +17,10 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Dman=false \
                        -Drelocatable=false"
 
+pre_configure_target() {
+  export PKG_CONFIG_PATH="$(get_build_dir shared-mime-info)/.$TARGET_NAME"
+}
+
 post_makeinstall_target() {
   cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 }
