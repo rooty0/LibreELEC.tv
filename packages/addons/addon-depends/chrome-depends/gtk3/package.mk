@@ -32,5 +32,8 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-  :
+  #install libs for chrome & spotify
+  mkdir -p $INSTALL/usr/lib
+  cp -PR gtk/.libs/libgtk-3.so* $INSTALL/usr/lib
+  cp -PR gdk/.libs/libgdk-3.so* $INSTALL/usr/lib
 }
