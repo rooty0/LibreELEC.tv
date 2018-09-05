@@ -22,5 +22,6 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_POSITION_INDEPENDENT_CODE=1 \
                        -DENABLE_COVERAGE=0"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL
+  rm -rf $INSTALL/usr/share
+  rm -rf $INSTALL/usr/bin
 }
