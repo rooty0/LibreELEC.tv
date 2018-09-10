@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-mgba"
-PKG_VERSION="4d1d9d3"
-PKG_SHA256="890aef2291e772ae9c96a04439e76707c2e8caa9ca2d0f638243ae1fda943dd8"
+PKG_VERSION="144dbd2"
+PKG_SHA256="b1fd7c9f77b4aaece6443db237b94d48cfa5ccf2c0b622ee6bf89ad91aa428d2"
 PKG_ARCH="any"
 PKG_LICENSE="MPL 2.0"
 PKG_SITE="https://github.com/libretro/mgba"
@@ -26,14 +26,24 @@ pre_configure_target() {
 }
 
 make_target() {
-  case $PROJECT in
-    RPi*)
+  if [ "$PROJECT" == "Amlogic" ]; then
       make -f Makefile.libretro platform=unix-armv HAVE_NEON=1 GIT_VERSION=$PKG_VERSION
-      ;;
-    Generic)
+  fi
+
+  if [ "$PROJECT" == "Generic" ]; then
       make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
-      ;;
-  esac
+  fi
+
+  if [ "$PROJECT" == "RPi" ]; then
+    case $DEVICE in
+      RPi)
+      make -f Makefile.libretro platform=unix-armv HAVE_NEON=1 GIT_VERSION=$PKG_VERSION
+        ;;
+      RPi2)
+      make -f Makefile.libretro platform=unix-armv CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+        ;;
+    esac
+  fi
 }
 
 makeinstall_target() {
