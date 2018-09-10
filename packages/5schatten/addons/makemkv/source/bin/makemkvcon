@@ -4,28 +4,11 @@
 
 . /etc/profile
 
-MAKEMKV_KEY=$(curl "https://www.makemkv.com/forum/viewtopic.php?f=5&t=1053" -s | awk 'FNR == 269 {print $13}'| cut -c 23-90)
-SETTINGS_FILE=$HOME/.config/MakeMKV/settings.conf
 ADDON_DIR="/storage/.kodi/addons/lib.multimedia.makemkv"
+SETTINGS_FILE=$HOME/.config/MakeMKV/settings.conf
 
-
-if [ -d /storage/.MakeMKV ]; then
-  mkdir -p $HOME/.config/MakeMKV
-  cp -R /storage/.MakeMKV/* /storage/.config/MakeMKV
-  rm -rf /storage/.MakeMKV
-  ln -s /storage/.config/MakeMKV /storage/.MakeMKV
-fi
-
-if [ ! -f $SETTINGS_FILE ]; then
-  mkdir -p $HOME/.config/MakeMKV
-  ln -s /storage/.config/MakeMKV /storage/.MakeMKV
-  echo "app_Key=\"$MAKEMKV_KEY\"" > $SETTINGS_FILE
-fi
-
-if [ "$MAKEMKV_KEY" != "$(cat $SETTINGS_FILE| grep app_Key="*" | cut -c10-77)" ]; then
-  sed -i '/app_Key=/d' $SETTINGS_FILE
-  echo -e "\napp_Key=\"$MAKEMKV_KEY\"" >> $SETTINGS_FILE
-  sed -i '/^\s*$/d' $SETTINGS_FILE
+if [ ! -f $SETTINGS_FILE ] || [ ! -L /storage/.MakeMKV ]; then
+  makemkv-key-update
 fi
 
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADDON_DIR/lib"
