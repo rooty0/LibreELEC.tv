@@ -20,17 +20,24 @@ PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="FBALPHA_LIB"
 
 make_target() {
-  case $PROJECT in
-    RPi)
-      make -f makefile.libretro platform=armv CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
-      ;;
-    RPi2)
-      make -f makefile.libretro platform=rpi2 CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
-      ;;
-    Generic)
+  if [ "$PROJECT" == "Amlogic" ]; then
       make -f makefile.libretro CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
-      ;;
-  esac
+  fi
+
+  if [ "$PROJECT" == "Generic" ]; then
+      make -f makefile.libretro CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+  fi
+
+  if [ "$PROJECT" == "RPi" ]; then
+    case $DEVICE in
+      RPi)
+        make -f makefile.libretro platform=armv CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+        ;;
+      RPi2)
+      make -f makefile.libretro platform=rpi2 CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
+        ;;
+    esac
+  fi
 }
 
 makeinstall_target() {
