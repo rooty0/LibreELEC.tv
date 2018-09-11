@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cmake"
-PKG_VERSION="3.12.1"
-PKG_SHA256="c53d5c2ce81d7a957ee83e3e635c8cda5dfe20c9d501a4828ee28e1615e57ab2"
+PKG_VERSION="3.12.2"
+PKG_SHA256="0f97485799e51a7070cc11494f3e02349b0fc3a24cc12b082e737bf67a0581a4"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
