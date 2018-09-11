@@ -21,8 +21,8 @@ case $KODI_VENDOR in
     PKG_SOURCE_NAME="kodi-$KODI_VENDOR-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="18.0b2-Leia"
-    PKG_SHA256="25fc0aabfb523d4db19e08b1990d4851592ee2adec0424f5fb729bd3672eae69"
+    PKG_VERSION="65fee744694298759e1f96815117c2b8b3e3c7d1"
+    PKG_SHA256="b5c867b2b0671d51186102131205c284df159917cae061266eb47f9482622e4f"
     PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="kodi-$PKG_VERSION.tar.gz"
     ;;
@@ -204,7 +204,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
-                       -DGIT_VERSION=$([ "$(type -t get_source_rev)" == "function" ] && get_source_rev $PKG_NAME $PKG_VERSION || echo $PKG_VERSION) \
+                       -DGIT_VERSION=$PKG_VERSION \
                        -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
