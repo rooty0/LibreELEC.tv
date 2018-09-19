@@ -24,11 +24,14 @@ pre_build_target() {
 
 make_target() {
   make
-  mkdir tmp
-  mv $PKG_LIBNAME tmp/
-  make clean
-  make HAVE_HW=1
-  mv tmp/$PKG_LIBNAME .
+
+  if [ "$PROJECT" == "Generic" ];then
+    mkdir tmp
+    mv $PKG_LIBNAME tmp/
+    make clean
+    make HAVE_HW=1
+    mv tmp/$PKG_LIBNAME .
+  fi
 }
 
 makeinstall_target() {
