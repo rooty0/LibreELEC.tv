@@ -23,23 +23,13 @@ PKG_LIBVAR="PCSX-REARMED_LIB"
 make_target() {
   cd $PKG_BUILD
   
-  if target_has_feature neon; then
-    export HAVE_NEON=1
-   else
-    export HAVE_NEON=0
+  if [[ "$TARGET_FPU" =~ "neon" ]]; then
+    make -f Makefile.libretro HAVE_NEON=1 USE_DYNAREC=1 BUILTIN_GPU=neon GIT_VERSION=$PKG_VERSION
+  elif [ "$ARCH" == "arm" ]; then
+    make -f Makefile.libretro HAVE_NEON=0 USE_DYNAREC=1 GIT_VERSION=$PKG_VERSION
+  else
+    make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
   fi
-  
-  case $TARGET_ARCH in
-    aarch64)
-      make -f Makefile.libretro platform=aarch64 GIT_VERSION=$PKG_VERSION
-      ;;
-    arm)
-      make -f Makefile.libretro USE_DYNAREC=1 GIT_VERSION=$PKG_VERSION
-      ;;
-    x86_64)
-      make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
-      ;;
-  esac
 }
 
 makeinstall_target() {
