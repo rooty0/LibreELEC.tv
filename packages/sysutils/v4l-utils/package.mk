@@ -101,7 +101,6 @@ post_makeinstall_target() {
 *		rc-rc6-mce	libreelec_multi
 # multi-table for amlogic devices
 meson-ir	*		libreelec_multi
-*			*		kvim
 EOF
 
   fi
