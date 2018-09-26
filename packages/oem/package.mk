@@ -66,6 +66,7 @@ OEM_EMU_AMLOGIC=" \
   libretro-yabause"
 
 OEM_EMU_GENERIC=" \
+  citra \
   dolphin \
   fs-uae \
   PCSX2 \
@@ -74,7 +75,6 @@ OEM_EMU_GENERIC=" \
   libretro-beetle-saturn \
   libretro-bsnes-mercury-accuracy \
   libretro-chailove \
-  libretro-citra \
   libretro-desmume \
   libretro-dolphin \
   libretro-ishiiruka \
