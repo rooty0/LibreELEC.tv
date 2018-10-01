@@ -61,6 +61,7 @@ OEM_EMU_COMMON=" \
 
 OEM_EMU_AMLOGIC=" \
   amiberry \
+  libretro-mame2010 \
   libretro-snes9x2010 \
   libretro-vice \
   libretro-yabause"
@@ -86,6 +87,7 @@ OEM_EMU_GENERIC=" \
 
 OEM_EMU_RPI=" \
   amiberry \
+  libretro-mame2010 \
   libretro-snes9x2010 \
   libretro-vice \
   libretro-yabause"
