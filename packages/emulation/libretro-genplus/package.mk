@@ -19,12 +19,12 @@ PKG_LIBNAME="genesis_plus_gx_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="GENPLUS_LIB"
 
-pre_build_target() {
-  export GIT_VERSION=$PKG_VERSION
-}
-
 make_target() {
-  make -f Makefile.libretro
+  if [ "$ARCH" == "arm" ]; then
+    CFLAGS="$CFLAGS -DALIGN_LONG"
+  fi
+
+  make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {
