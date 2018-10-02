@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="SDL2"
-PKG_VERSION="b21dca1"
-PKG_SHA256="653d4f73e2ba3d6d1f10371787ea380ff371bf353060d358da0032384e7bae83"
+PKG_VERSION="daadbba"
+PKG_SHA256="a1fb0f6392c20f694ad3ad4d5c8acf5becfa06242cf1eb46304f41899420ce63"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
@@ -49,7 +49,8 @@ fi
 # RPi Video Support
 if [ "$OPENGLES" == "bcm2835-driver" ]; then
   SUPPORT_RPI="-DVIDEO_RPI=ON \
-               -DVIDEO_VULKAN=OFF"
+               -DVIDEO_VULKAN=OFF \
+               -DVIDEO_KMSDRM=OFF"
 else
   SUPPORT_RPI="-DVIDEO_RPI=OFF"
 fi
