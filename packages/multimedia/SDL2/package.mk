@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="SDL2"
-PKG_VERSION="daadbba"
-PKG_SHA256="a1fb0f6392c20f694ad3ad4d5c8acf5becfa06242cf1eb46304f41899420ce63"
+PKG_VERSION="315f87a"
+PKG_SHA256="fd592c1b014209fadd777ba1803de77829b0c72442bd18a2a4f2172f16bb4ff1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
@@ -47,7 +47,7 @@ else
 fi
 
 # RPi Video Support
-if [ "$OPENGLES" == "bcm2835-driver" ]; then
+if [ "$OPENGLES" = "bcm2835-driver" ]; then
   SUPPORT_RPI="-DVIDEO_RPI=ON \
                -DVIDEO_VULKAN=OFF \
                -DVIDEO_KMSDRM=OFF"
@@ -56,7 +56,7 @@ else
 fi
 
 # AML Mali Video Support
-if [ "$OPENGLES" == "opengl-meson" ] || [ "$OPENGLES" == "opengl-meson-t82x" ]; then
+if [ "$OPENGLES" = "opengl-meson" ] || [ "$OPENGLES" == "opengl-meson-t82x" ]; then
   SUPPORT_MALI="-DVIDEO_MALI=ON \
                 -DVIDEO_VULKAN=OFF \
                 -DVIDEO_KMSDRM=OFF"
@@ -112,12 +112,12 @@ PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
                        -DCLOCK_GETTIME=OFF \
                        -DRPATH=OFF \
                        -DRENDER_D3D=OFF \
-                        $SUPPORT_X11 \
-                        $SUPPORT_OPENGL \
-                        $SUPPORT_OPENGLES \
-                        $SUPPORT_RPI \
-                        $SUPPORT_MALI \
-                        $SUPPORT_PULSEAUDIO"
+                       $SUPPORT_X11 \
+                       $SUPPORT_OPENGL \
+                       $SUPPORT_OPENGLES \
+                       $SUPPORT_RPI \
+                       $SUPPORT_MALI \
+                       $SUPPORT_PULSEAUDIO"
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/sdl2-config
