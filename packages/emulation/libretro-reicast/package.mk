@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-reicast"
-PKG_VERSION="07002f1"
-PKG_SHA256="db494206d04827d48a4698c4de11ff0d3c3f5e5cdd7baa336d65bb1779ee5675"
+PKG_VERSION="f4cb7e3"
+PKG_SHA256="5a133d4c337c901811d1e1e0bb21dcd40be42c34d5953c9f54a68c559f5af5b9"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/reicast-emulator"
