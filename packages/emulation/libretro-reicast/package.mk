@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-reicast"
-PKG_VERSION="f4cb7e3"
-PKG_SHA256="5a133d4c337c901811d1e1e0bb21dcd40be42c34d5953c9f54a68c559f5af5b9"
+PKG_VERSION="49083ae"
+PKG_SHA256="7e037b3a3a41c0a28b02347b59f8f1d05d0ed13eb59150b319ba74998c0decf6"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/reicast-emulator"
@@ -27,9 +27,8 @@ pre_make_target() {
 make_target() {
   if [ "$PROJECT" == "Amlogic" ]; then
     make FORCE_GLES=1 HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH platform=rpi3
-  fi
-
-  if [ "$PROJECT" == "RPi" ]; then
+  
+  elif [ "$PROJECT" == "RPi" ]; then
     case $DEVICE in
       RPi)
         make FORCE_GLES=1 HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH platform=rpi
@@ -38,21 +37,9 @@ make_target() {
         make FORCE_GLES=1 HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH platform=rpi2
         ;;
     esac
-  fi
 
-  if [ "$PROJECT" == "Generic" ]; then
-      #clean build dir
-      rm -rf tmp/*.so
-      mkdir -p tmp
-
-      #build reicast oit
-      make AS=${AS} CC_AS=${AS} HAVE_OPENMP=0 GIT_VERSION=$PKG_VERSION
-      mv *.so tmp
-      make clean
-
-      #build reicast oit
-      make AS=${AS} CC_AS=${AS} HAVE_OPENMP=0 HAVE_OIT=1 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH
-      mv tmp/*.so .
+  else
+    make AS=${AS} CC_AS=${AS} HAVE_OPENMP=0 HAVE_OIT=1 GIT_VERSION=$PKG_VERSION WITH_DYNAREC=$ARCH
   fi
 }
 
