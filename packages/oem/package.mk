@@ -37,6 +37,7 @@ OEM_EMU_COMMON=" \
   emulationstation-retropie \
   retroarch \
   dosbox-sdl2 \
+  hatari \
   moonlight-embedded \
   ppsspp \
   libretro-2048 \
