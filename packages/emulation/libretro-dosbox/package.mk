@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-dosbox"
-PKG_VERSION="8f2d731"
-PKG_SHA256="ee1bd0d04f9aa0e11eb827b8badbceec5bd9f0727765688436bd1d67fdb65816"
+PKG_VERSION="2d6bfbfe9ae82be17afbadf41f24950c2f9e2db9"
+PKG_SHA256="48b0e329bfe7e11822d220a5a622da1af3fd06dfbb5f88b4c5ba141fda8b4d2a"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/dosbox-libretro"
@@ -24,11 +24,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  if [ ! "$OEM_EMU" = "no" ]; then
-    mkdir -p $INSTALL/usr/lib/libretro
-    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
-  fi
-
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

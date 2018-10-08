@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-beetle-saturn"
-PKG_VERSION="1983713"
+PKG_VERSION="1983713f665e86459900a08873fac09e70c31bfa"
 PKG_SHA256="7798dd838c33d374713d3a3f32c05edf09ed27fa05c3124a1fae954730964fc9"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
@@ -19,15 +19,10 @@ PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="BEETLE-SATURN_LIB"
 
 make_target() {
-  make GIT_VERSION=$PKG_VERSION
+  make
 }
 
 makeinstall_target() {
-  if [ ! "$OEM_EMU" = "no" ]; then
-    mkdir -p $INSTALL/usr/lib/libretro
-    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
-  fi
-
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

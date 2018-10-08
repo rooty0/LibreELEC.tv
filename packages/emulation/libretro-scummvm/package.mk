@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-scummvm"
-PKG_VERSION="0daf2f4"
+PKG_VERSION="0daf2f441c73b0ec0b1562c3483390ade790795c"
 PKG_SHA256="5420a7ad148cc83f898e597f44bb4924ff019cc40add43851782ab5c8c4524cc"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
@@ -27,11 +27,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  if [ ! "$OEM_EMU" = "no" ]; then
-    mkdir -p $INSTALL/usr/lib/libretro
-    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
-  fi
-
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake

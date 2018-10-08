@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libretro-genplus"
-PKG_VERSION="7856b72"
+PKG_VERSION="7856b7208981fa4dc33623f89c4f330a95019c26"
 PKG_SHA256="bb7253623488e57b6e852135c7fedce693fd997a6cb8abb2309c20886ee6aed8"
 PKG_ARCH="any"
 PKG_LICENSE="Modified BSD / LGPLv2.1"
@@ -20,7 +20,7 @@ PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="GENPLUS_LIB"
 
 make_target() {
-  if [ "$ARCH" == "arm" ]; then
+  if [ "$ARCH" = "arm" ]; then
     CFLAGS="$CFLAGS -DALIGN_LONG"
   fi
 
@@ -28,11 +28,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  if [ ! "$OEM_EMU" = "no" ]; then
-    mkdir -p $INSTALL/usr/lib/libretro
-    cp $PKG_LIBPATH $INSTALL/usr/lib/libretro/
-  fi
-
   mkdir -p $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME
   cp $PKG_LIBPATH $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME
   echo "set($PKG_LIBVAR $SYSROOT_PREFIX/usr/lib/$PKG_LIBNAME)" > $SYSROOT_PREFIX/usr/lib/cmake/$PKG_NAME/$PKG_NAME-config.cmake
