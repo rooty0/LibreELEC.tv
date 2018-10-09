@@ -2,80 +2,19 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="SDL2"
-PKG_VERSION="ff6aab8"
-PKG_SHA256="67343aa7963d3635fee52baa543793d74fc43193dd5be25f3e4dfe3472a97580"
+PKG_VERSION="2.0.8"
+PKG_SHA256="edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
-PKG_URL="https://github.com/spurious/SDL-mirror/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="SDL-mirror-$PKG_VERSION*"
+PKG_URL="https://www.libsdl.org/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="SDL2: A cross-platform Graphic API"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform multimedia library designed to provide fast access to the graphics framebuffer and audio device. It is used by MPEG playback software, emulators, and many popular games, including the award winning Linux port of 'Civilization: Call To Power.' Simple DirectMedia Layer supports Linux, Win32, BeOS, MacOS, Solaris, IRIX, and FreeBSD."
 
-# X11 Support
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXrandr"
-  SUPPORT_X11="-DVIDEO_X11=ON \
-               -DX11_SHARED=ON \
-               -DVIDEO_X11_XCURSOR=OFF \
-               -DVIDEO_X11_XINERAMA=OFF \
-               -DVIDEO_X11_XINPUT=OFF \
-               -DVIDEO_X11_XRANDR=ON \
-               -DVIDEO_X11_XSCRNSAVER=OFF \
-               -DVIDEO_X11_XSHAPE=OFF \
-               -DVIDEO_X11_XVM=OFF"
-else
-  SUPPORT_X11="-DVIDEO_X11=OFF"
-fi
-
-# OpenGL Support
-if [ ! "$OPENGL" = "no" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL"
-  SUPPORT_OPENGL="-DVIDEO_OPENGL=ON"
-else
-  SUPPORT_OPENGL="-DVIDEO_OPENGL=OFF"
-fi
-
-# OpenGLES Support
-if [ ! "$OPENGLES" = "no" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
-  SUPPORT_OPENGLES="-DVIDEO_OPENGLES=ON"
-else
-  SUPPORT_OPENGLES="-DVIDEO_OPENGLES=OFF"
-fi
-
-# RPi Video Support
-if [ "$OPENGLES" = "bcm2835-driver" ]; then
-  SUPPORT_RPI="-DVIDEO_RPI=ON \
-               -DVIDEO_VULKAN=OFF \
-               -DVIDEO_KMSDRM=OFF"
-else
-  SUPPORT_RPI="-DVIDEO_RPI=OFF"
-fi
-
-# AML Mali Video Support
-if [ "$OPENGLES" = "opengl-meson" ] || [ "$OPENGLES" == "opengl-meson-t82x" ]; then
-  SUPPORT_MALI="-DVIDEO_MALI=ON \
-                -DVIDEO_VULKAN=OFF \
-                -DVIDEO_KMSDRM=OFF"
-else
-  SUPPORT_MALI="-DVIDEO_MALI=OFF"
-fi
-
-# Pulseaudio Support
-if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
-
-  SUPPORT_PULSEAUDIO="-DPULSEAUDIO=ON \
-                      -DPULSEAUDIO_SHARED=ON"
-else
-  SUPPORT_PULSEAUDIO="-DPULSEAUDIO=OFF \
-                      -DPULSEAUDIO_SHARED=OFF"
-fi
-
-PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
+PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
+                       -DSDL_SHARED=OFF \
                        -DLIBC=ON \
                        -DGCC_ATOMICS=ON \
                        -DASSEMBLY=ON \
@@ -99,7 +38,6 @@ PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
                        -DMIR_SHARED=OFF \
                        -DVIDEO_COCOA=OFF \
                        -DVIDEO_DIRECTFB=OFF \
-                       -DVIDEO_VIVANTE=OFF \
                        -DDIRECTFB_SHARED=OFF \
                        -DFUSIONSOUND=OFF \
                        -DFUSIONSOUND_SHARED=OFF \
@@ -111,13 +49,49 @@ PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
                        -DSDL_DLOPEN=ON \
                        -DCLOCK_GETTIME=OFF \
                        -DRPATH=OFF \
-                       -DRENDER_D3D=OFF \
-                       $SUPPORT_X11 \
-                       $SUPPORT_OPENGL \
-                       $SUPPORT_OPENGLES \
-                       $SUPPORT_RPI \
-                       $SUPPORT_MALI \
-                       $SUPPORT_PULSEAUDIO"
+                       -DRENDER_D3D=OFF"
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXrandr"
+
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DVIDEO_X11=ON \
+                         -DX11_SHARED=ON \
+                         -DVIDEO_X11_XCURSOR=OFF \
+                         -DVIDEO_X11_XINERAMA=OFF \
+                         -DVIDEO_X11_XINPUT=OFF \
+                         -DVIDEO_X11_XRANDR=ON \
+                         -DVIDEO_X11_XSCRNSAVER=OFF \
+                         -DVIDEO_X11_XSHAPE=OFF \
+                         -DVIDEO_X11_XVM=OFF"
+else
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DVIDEO_X11=OFF"
+fi
+
+if [ ! "$OPENGL" = "no" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL"
+
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DVIDEO_OPENGL=ON \
+                         -DVIDEO_OPENGLES=OFF"
+else
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DVIDEO_OPENGL=OFF \
+                         -DVIDEO_OPENGLES=ON"
+fi
+
+if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
+
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DPULSEAUDIO=ON \
+                         -DPULSEAUDIO_SHARED=ON"
+else
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET \
+                         -DPULSEAUDIO=OFF \
+                         -DPULSEAUDIO_SHARED=OFF"
+fi
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/sdl2-config
