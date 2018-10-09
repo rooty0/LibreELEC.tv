@@ -125,5 +125,6 @@ fi
 
 makeinstall_target() {
   mkdir -p $INSTALL
-  cp -PR $PKG_DIR/files/* $INSTALL
+  cp -PR $PKG_DIR/files/common/* $INSTALL
+  cp -PR $PKG_DIR/files/$PROJECT/* $INSTALL
 }
