@@ -28,7 +28,8 @@ OEM_APPS_GENERIC=" \
   dmidecode \
   google-chrome \
   smartmontools \
-  spotify"
+  spotify \
+  tigervnc-system"
 
 OEM_APPS_RPI=" \
   librespot"
