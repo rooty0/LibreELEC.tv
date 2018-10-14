@@ -74,6 +74,7 @@ OEM_EMU_GENERIC=" \
   fs-uae \
   PCSX2 \
   vice \
+  yquake2 \
   lr-beetle-psx \
   lr-beetle-saturn \
   lr-bsnes-mercury-accuracy \
