@@ -9,8 +9,6 @@ PKG_LICENSE="BSD"
 PKG_SITE="http://glfw.org"
 PKG_URL="https://github.com/glfw/glfw/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain mesa glu"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
 PKG_LONGDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
 
 if [ "$OPENGL" = "no" ] ; then
