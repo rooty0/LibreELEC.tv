@@ -4,7 +4,6 @@
 PKG_NAME="openal-soft"
 PKG_VERSION="1.19.1"
 PKG_SHA256="9f3536ab2bb7781dbafabc6a61e0b34b17edd16bd6c2eaf2ae71bc63078f98c7"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openal.org/"
 PKG_URL="https://github.com/kcat/openal-soft/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
