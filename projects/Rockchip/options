@@ -35,6 +35,9 @@
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
     OPENGLES="mali-rockchip"
 
+  # Vulkan API support (yes / no)
+    VULKANAPI="no"
+
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
 

@@ -91,6 +91,9 @@
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
     OPENGLES="opengl-meson"
 
+  # Vulkan API support (yes / no)
+    VULKANAPI="no"
+
   # Amlogic Meson SOC family (8 / 6 / gxbb)
     MESON_FAMILY="6"
 

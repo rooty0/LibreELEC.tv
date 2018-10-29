@@ -83,6 +83,9 @@
   # OpenGL-ES implementation to use (no / bcm2835-driver / mesa)
     OPENGLES="bcm2835-driver"
 
+  # Vulkan API support (yes / no)
+    VULKANAPI="no"
+
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
 
