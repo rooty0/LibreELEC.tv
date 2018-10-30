@@ -100,7 +100,7 @@
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
   # Space separated list is supported,
-    DRIVER_ADDONS="crazycat digital_devices dvb-latest"
+    DRIVER_ADDONS="digital_devices dvb-latest"
 
   # Override some RetroArch playlist core assignation
     RA_PLAYLIST_CORES="${RA_PLAYLIST_CORES//fceumm/mesen}"
