@@ -39,7 +39,7 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/$XORG_PATH_MODULES/extensions
   # rename to not conflicting with Mesa libGL.so
-    cp -P libGLX.so* $INSTALL/$XORG_PATH_MODULES/extensions/libglx_nvidia.so
+    cp -P libGLX_nvidia.so.$PKG_VERSION $INSTALL/$XORG_PATH_MODULES/extensions/libglx_nvidia.so
     cp -P libglxserver_nvidia.so.$PKG_VERSION $INSTALL/$XORG_PATH_MODULES/extensions
       ln -s libglxserver_nvidia.so.$PKG_VERSION $INSTALL/$XORG_PATH_MODULES/extensions/libglxserver_nvidia.so
 
