@@ -2,9 +2,9 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.beetle-bsnes"
-PKG_VERSION="134d9da7d5e8d35730b9832014e2e51c5169e114"
-PKG_SHA256="493bff629f5c098a3ed0f63a842fbff1fd57a39e652713d89265fabdadd8aa07"
-PKG_REV="108"
+PKG_VERSION="ce94456825afdb4e2c5a7b730d12dca21b40ef14"
+PKG_SHA256="7b493603b75c7d823cf99fe7839eab64073d6434042b801c92ec7088d3b5cdb1"
+PKG_REV="109"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-bsnes"

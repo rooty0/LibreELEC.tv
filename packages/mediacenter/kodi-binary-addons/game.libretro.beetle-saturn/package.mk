@@ -2,9 +2,9 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.beetle-saturn"
-PKG_VERSION="6ba8aaa95e31e37668fb5e5beee529e503299956"
-PKG_SHA256="8784689107e54296d83550aec5d131a5c8800288fae79ea626ad026683dbc67e"
-PKG_REV="109"
+PKG_VERSION="efe0346f483172618f4b8acf28c263348302afd4"
+PKG_SHA256="647f1b3c5647d269dc23d86aaee3febab2ce2a038ea3f09ecef3c65eead29779"
+PKG_REV="110"
 # no openGL suport in retroplayer yet
 PKG_ARCH="none"
 PKG_LICENSE="GPL"
