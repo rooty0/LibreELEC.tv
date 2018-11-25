@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.bnes"
-PKG_VERSION="5ff04f1f5a1048812c854235475a899cfa7c9f18"
-PKG_SHA256="fb93a7a22d96528545ebcd2c5aa244ec5bda04c23edacedd81d989b18b69c0e7"
+PKG_VERSION="b7587afaa9fc35d152b47ee0f0d1de1e0f7956c2"
+PKG_SHA256="bcd48dce0c3c2636243a3a7c0bcb4e2192e9678844872e34393606b55a632da0"
 PKG_REV="109"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
