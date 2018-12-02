@@ -50,7 +50,7 @@ del_edid() {
       mv "$file".old "$file"
       rm -f /flash/edid.cpio
       mount_ro
-      rm -fr /storage/.config/firmware
+      rm -rf /storage/.config/firmware/edid
       sys_reboot
     else
       echo "You don't have a backup file for $file. You did not use this script to create the custom EDID"
