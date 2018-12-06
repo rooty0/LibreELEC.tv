@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="746ab3bb131dea8ad015e7804bfcdd6b4cc4f44e"
+PKG_VERSION="e5ff8e1828f97891c819c919d7115c6e18b2eb1f"
 PKG_SHA256="c917f86757355396f2f14f1cd39f97c4cbd33a43dd8ab9e2b10e7663ae2c8f84"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
