@@ -12,11 +12,11 @@ PKG_LONGDESC="Replaces Setuptools as the standard method for working with Python
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  python bootstrap.py
+  python2 bootstrap.py
   python3 bootstrap.py
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$TOOLCHAIN
+  python2 setup.py install --prefix=$TOOLCHAIN
   python3 setup.py install --prefix=$TOOLCHAIN
 }
