@@ -86,6 +86,9 @@ pre_configure_target() {
   CFLAGS="$CFLAGS -I$(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/include"
   LDFLAGS="$LDFLAGS -L$(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/lib"
 
+# pass gnutls to build
+  LDFLAGS="$LDFLAGS -L$(get_build_dir gnutls)/.INSTALL_PKG/usr/lib"
+
 # pass libhdhomerun to build
   CFLAGS="$CFLAGS -I$(get_build_dir libhdhomerun)"
 
