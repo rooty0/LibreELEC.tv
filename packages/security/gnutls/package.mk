@@ -22,6 +22,3 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
                            --with-libgcrypt \
                            --with-zlib \
                            --without-p11-kit"
-makeinstall_target() {
-  make install DESTDIR="$INSTALL/../.INSTALL_PKG"
-}
