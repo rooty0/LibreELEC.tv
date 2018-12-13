@@ -15,7 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
                            --disable-openssl"
 
 if target_has_feature neon; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-arm-neon"
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-arm-neon"
 fi
 
 post_makeinstall_target() {
