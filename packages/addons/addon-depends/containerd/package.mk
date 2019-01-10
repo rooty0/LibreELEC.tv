@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="containerd"
-PKG_VERSION="1.2.1"
-PKG_SHA256="a2780aca4d72bb8aced14ca9de99bdc9a90bdaacb06c5ddd8378a66443c1d70f"
+PKG_VERSION="1.2.2"
+PKG_SHA256="91d480816986d74ff4fa7dd0412c787615fa705975b18fa4079c333b137c653f"
 PKG_LICENSE="APL"
 PKG_SITE="https://containerd.tools/"
 PKG_URL="https://github.com/containerd/containerd/archive/v$PKG_VERSION.tar.gz"
@@ -38,9 +38,8 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  # Update CONTAINERD_VERSION if you update the PKG_VERSION
-  export CONTAINERD_VERSION=v1.2.0
-  export CONTAINERD_REVISION=$PKG_VERSION
+  export CONTAINERD_VERSION=v${PKG_VERSION}
+  export CONTAINERD_REVISION=${PKG_VERSION}
   export CONTAINERD_PKG=github.com/containerd/containerd
   export LDFLAGS="-w -extldflags -static -X ${CONTAINERD_PKG}/version.Version=${CONTAINERD_VERSION} -X ${CONTAINERD_PKG}/version.Revision=${CONTAINERD_REVISION} -X ${CONTAINERD_PKG}/version.Package=${CONTAINERD_PKG} -extld $CC"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
