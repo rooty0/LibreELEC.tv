@@ -3,9 +3,9 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="docker"
-PKG_VERSION="18.09.1-rc1"
-PKG_SHA256="fb87daf5fe2a5fb90227f6ba414dff0cc4e0b157a337ab9d9482757361c6588b"
-PKG_REV="121"
+PKG_VERSION="18.09.1"
+PKG_SHA256="9eadb1eae1954b0322aadf6505f5397d1b1eccf6395ab511cadf8e6975cfc576"
+PKG_REV="122"
 PKG_ARCH="any"
 PKG_ADDON_PROJECTS="any !WeTek_Core !WeTek_Play"
 PKG_LICENSE="ASL"
