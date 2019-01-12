@@ -12,13 +12,16 @@ PKG_DEPENDS_TARGET="toolchain libidn2 nettle zlib"
 PKG_LONGDESC="A library which provides a secure layer over a reliable transport layer."
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
+                           --disable-full-test-suite \
                            --disable-guile \
+                           --disable-libdane \
+                           --disable-padlock \
+                           --disable-tests \
                            --disable-tools \
                            --disable-valgrind-tests \
                            --enable-local-libopts \
                            --with-idn \
                            --with-included-libtasn1 \
                            --with-included-unistring \
-                           --with-libgcrypt \
-                           --with-zlib \
-                           --without-p11-kit"
+                           --without-p11-kit \
+                           --without-tpm"
