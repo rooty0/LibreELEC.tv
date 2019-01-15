@@ -36,7 +36,6 @@ PKG_DEPENDS_TARGET="toolchain \
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
     # bwm-ng
     cp -P $(get_build_dir bwm-ng)/.$TARGET_NAME/src/bwm-ng $ADDON_BUILD/$PKG_ADDON_ID/bin
 
@@ -70,7 +69,6 @@ addon() {
     cp -P $(get_build_dir nmap)/nmap $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # rar2fs
-    cp -P $(get_build_dir libunrar)/libunrar.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     cp -P $(get_build_dir rar2fs)/.$TARGET_NAME/mkr2i $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -P $(get_build_dir rar2fs)/.$TARGET_NAME/rar2fs $ADDON_BUILD/$PKG_ADDON_ID/bin
 
