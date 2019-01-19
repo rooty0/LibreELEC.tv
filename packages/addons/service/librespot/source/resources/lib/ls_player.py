@@ -8,71 +8,85 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
+from ls_env import LS_FIFO as LS_FIFO
+from ls_env import LS_IP as LS_IP
+from ls_env import LS_PORT as LS_PORT
 from ls_librespot import Librespot as Librespot
 from ls_log import log as log
 from ls_spotify import Spotify as Spotify
 
 _CODEC = 'pcm_s16le'
-_FIFO = '/var/run/librespot'
-_STREAM = 'rtp://127.0.0.1:6666'
+_STREAM = 'rtp://{}:{}'.format(LS_IP, LS_PORT)
 
-_DEFAULT_ICON = xbmcaddon.Addon().getAddonInfo('icon')
-_DEFAULT_TITLE = xbmcaddon.Addon().getAddonInfo('name')
+_DIALOG = xbmcgui.Dialog()
+_LISTITEM = xbmcgui.ListItem()
+_LISTITEM.addStreamInfo('audio', {'codec': _CODEC})
+_LISTITEM.setPath(_STREAM)
 
 
 class Player(threading.Thread, xbmc.Player):
 
     def __init__(self):
         super(Player, self).__init__()
-        self.updateSettings()
-        self.dialog = xbmcgui.Dialog()
         self.librespot = Librespot()
-        self.listitem = xbmcgui.ListItem()
-        self.listitem.addStreamInfo('audio', {'codec': _CODEC})
-        self.listitem.setPath(_STREAM)
         self.spotify = Spotify()
+        self.updateSettings()
         self.start()
-        if self.isPlaying():
-            self.onPlayBackStarted()
+
+    def isPlayingLibrespot(self):
+        return self.isPlaying() and self.getPlayingFile() == _STREAM
 
     def onAbortRequested(self):
         log('abort requested')
-        with open(_FIFO, 'w') as fifo:
+        with open(LS_FIFO, 'w') as fifo:
             fifo.close()
         self.join()
 
     def onPlayBackEnded(self):
         log('a playback ended')
-        self.librespot.restart()
+        self.onStop()
 
-    def onPlayBackStarted(self):
-        log('a playback started')
-        if self.getPlayingFile() != _STREAM:
-            self.librespot.stop()
+    def onPlayBackError(self):
+        log('a playback error')
+        self.onStop()
+
+    def onAVChange(self):
+        log('a stream changed')
+        self.onStart()
+
+    def onAVStarted(self):
+        log('a stream started')
+        self.onStart()
 
     def onPlayBackStopped(self):
         log('a playback stopped')
-        self.librespot.restart()
+        self.onStop()
 
     def onSettingsChanged(self):
         log('settings changed')
         self.stop()
+        self.librespot.stop()
         self.updateSettings()
 
-    def pause(self):
-        if self.isPlaying() and self.getPlayingFile() == _STREAM:
+    def onStart(self):
+        if self.getPlayingFile() != _STREAM:
+            self.librespot.stop()
+
+    def onStop(self):
+        self.librespot.start()
+
+    def pause(self, track_id):
+        if self.isPlayingLibrespot():
             log('pausing librespot playback')
             super(Player, self).pause()
+        else:
+            self.play(track_id)
 
     def play(self, track_id):
         track = self.spotify.getTrack(track_id)
-        if track['thumb'] == '':
-            track['thumb'] = _DEFAULT_ICON
-        if track['title'] == '':
-            track['title'] = _DEFAULT_TITLE
-        if self.kodi:
-            self.listitem.setArt({'thumb': track['thumb']})
-            self.listitem.setInfo(
+        if self.playsWithKodi:
+            _LISTITEM.setArt({'thumb': track['thumb']})
+            _LISTITEM.setInfo(
                 'music',
                 {
                     'album': track['album'],
@@ -80,15 +94,15 @@ class Player(threading.Thread, xbmc.Player):
                     'title': track['title']
                 }
             )
-            if self.isPlaying() and self.getPlayingFile() == _STREAM:
-                log('updating librespot playback')
-                self.updateInfoTag(self.listitem)
+            _LISTITEM.setPath(_STREAM)
+            log('starting librespot playback')
+            if self.isPlayingLibrespot():
+                self.updateInfoTag(_LISTITEM)
             else:
                 self.librespot.unsuspend()
-                log('starting librespot playback')
-                super(Player, self).play(_STREAM, self.listitem)
+                super(Player, self).play(_STREAM, _LISTITEM)
         else:
-            self.dialog.notification(
+            _DIALOG.notification(
                 track['title'],
                 track['artist'],
                 icon=track['thumb'],
@@ -97,38 +111,38 @@ class Player(threading.Thread, xbmc.Player):
     def run(self):
         log('named pipe started')
         try:
-            os.unlink(_FIFO)
+            os.unlink(LS_FIFO)
         except OSError:
             pass
-        os.mkfifo(_FIFO)
-        while (os.path.exists(_FIFO) and
-               stat.S_ISFIFO(os.stat(_FIFO).st_mode)):
-            with open(_FIFO, 'r') as fifo:
+        os.mkfifo(LS_FIFO)
+        while (os.path.exists(LS_FIFO) and
+               stat.S_ISFIFO(os.stat(LS_FIFO).st_mode)):
+            with open(LS_FIFO, 'r') as fifo:
                 command = fifo.read().splitlines()
                 log('named pipe received {}'.format(str(command)))
                 if len(command) == 0:
                     break
-                elif command[0] == 'play':
+                elif command[0] in ['3', '5', '6']:
+                    self.pause(command[1])
+                elif command[0] in ['1', '2']:
                     self.play(command[1])
-                elif command[0] == 'stop':
+                elif command[0] in ['4', '7']:
                     self.stop()
-                elif command[0] == 'pause':
-                    self.pause()
         try:
-            os.unlink(_FIFO)
+            os.unlink(LS_FIFO)
         except OSError:
             pass
         log('named pipe stopped')
 
     def stop(self):
-        if self.isPlaying():
-            if self.getPlayingFile() == _STREAM:
-                log('stopping librespot playback')
-                super(Player, self).stop()
-            else:
-                self.librespot.stop()
-        else:
-            self.librespot.restart()
+        if self.isPlayingLibrespot():
+            log('stopping librespot playback')
+            super(Player, self).stop()
 
     def updateSettings(self):
-        self.kodi = (xbmcaddon.Addon().getSetting('ls_m') == 'Kodi')
+        log('updating settings')
+        self.playsWithKodi = (xbmcaddon.Addon().getSetting('ls_m') == 'Kodi')
+        if self.isPlaying():
+            self.onStart()
+        else:
+            self.onStop()

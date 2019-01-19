@@ -1,37 +1,53 @@
-From 109452968762175b255d3a46d2447bf103022a68 Mon Sep 17 00:00:00 2001
-From: awiouy <awiouy@gmail.com>
-Date: Wed, 7 Nov 2018 07:49:31 +0100
-Subject: [PATCH] libreelec: kodi hooks
+diff --git a/playback/src/config.rs b/playback/src/config.rs
+index 0f71110..931167d 100644
+--- a/playback/src/config.rs
++++ b/playback/src/config.rs
+@@ -30,6 +30,7 @@ pub struct PlayerConfig {
+     pub bitrate: Bitrate,
+     pub normalisation: bool,
+     pub normalisation_pregain: f32,
++    pub notify_kodi: bool,
+ }
 
----
- playback/src/player.rs      | 44 ++++++++++++++++++++++++++-----------
- src/player_event_handler.rs |  8 +++++--
- 2 files changed, 37 insertions(+), 15 deletions(-)
-
+ impl Default for PlayerConfig {
+@@ -38,6 +39,7 @@ impl Default for PlayerConfig {
+             bitrate: Bitrate::default(),
+             normalisation: false,
+             normalisation_pregain: 0.0,
++            notify_kodi: false,
+         }
+     }
+ }
 diff --git a/playback/src/player.rs b/playback/src/player.rs
-index ab1a8ab..0aa0630 100644
+index ab1a8ab..19d6394 100644
 --- a/playback/src/player.rs
 +++ b/playback/src/player.rs
-@@ -49,15 +49,18 @@ enum PlayerCommand {
- pub enum PlayerEvent {
-     Started {
-         track_id: SpotifyId,
-+        new_state: String,
-     },
- 
-     Changed {
-         old_track_id: SpotifyId,
-         new_track_id: SpotifyId,
-+        new_state: String,
-     },
- 
-     Stopped {
-         track_id: SpotifyId,
-+        new_state: String,
-     },
- }
- 
-@@ -413,11 +416,18 @@ impl PlayerInternal {
+@@ -4,7 +4,8 @@ use futures::sync::oneshot;
+ use futures::{future, Future};
+ use std;
+ use std::borrow::Cow;
+-use std::io::{Read, Result, Seek, SeekFrom};
++use std::fs::OpenOptions;
++use std::io::{Read, Result, Seek, SeekFrom, Write};
+ use std::mem;
+ use std::sync::mpsc::{RecvError, RecvTimeoutError, TryRecvError};
+ use std::thread;
+@@ -394,6 +395,14 @@ impl PlayerInternal {
+         }
+     }
+
++    fn notify_kodi(&mut self, id: &str, track_id: &SpotifyId) {
++        // println!("fifo = {} {}", id, track_id.to_base62());
++        if self.config.notify_kodi {
++            let mut file = OpenOptions::new().write(true).open("/tmp/librespot").unwrap();
++            writeln!(&mut file, "{}\n{}", id, track_id.to_base62()).unwrap();
++        }
++    }
++
+     fn handle_command(&mut self, cmd: PlayerCommand) {
+         debug!("command={:?}", cmd);
+         match cmd {
+@@ -413,11 +422,17 @@ impl PlayerInternal {
                                  | PlayerState::EndOfTrack {
                                      track_id: old_track_id,
                                      ..
@@ -41,21 +57,20 @@ index ab1a8ab..0aa0630 100644
 -                                }),
 -                                _ => self.send_event(PlayerEvent::Started { track_id }),
 +                                } => {
-+                                    let new_state = "play".to_string();
 +                                    self.send_event(PlayerEvent::Changed {
 +                                        old_track_id: old_track_id,
 +                                        new_track_id: track_id,
-+                                        new_state: new_state,
 +                                    });
-+                                },
++                                    self.notify_kodi("1", &track_id)
++                                }
 +                                _ => {
-+                                    let new_state = "play".to_string();
-+                                    self.send_event(PlayerEvent::Started { track_id, new_state });
-+                                },
++                                    self.send_event(PlayerEvent::Started { track_id });
++                                    self.notify_kodi("2", &track_id)
++                                }
                              }
- 
+
                              self.start_sink();
-@@ -443,13 +453,18 @@ impl PlayerInternal {
+@@ -443,13 +458,17 @@ impl PlayerInternal {
                                  | PlayerState::EndOfTrack {
                                      track_id: old_track_id,
                                      ..
@@ -64,77 +79,72 @@ index ab1a8ab..0aa0630 100644
 -                                    new_track_id: track_id,
 -                                }),
 +                                } => {
-+                                    let new_state = "pause".to_string();
 +                                    self.send_event(PlayerEvent::Changed {
 +                                        old_track_id: old_track_id,
 +                                        new_track_id: track_id,
-+                                        new_state: new_state,
-+                                    })
-+                                },
++                                    });
++                                    self.notify_kodi("3", &track_id)
++                                }
                                  _ => (),
                              }
--                            self.send_event(PlayerEvent::Stopped { track_id });
-+                            let new_state = "pause".to_string();
-+                            self.send_event(PlayerEvent::Stopped { track_id, new_state });
+                             self.send_event(PlayerEvent::Stopped { track_id });
++                            self.notify_kodi("4", &track_id)
                          }
                      }
- 
-@@ -474,7 +489,8 @@ impl PlayerInternal {
-                 if let PlayerState::Paused { track_id, .. } = self.state {
-                     self.state.paused_to_playing();
- 
--                    self.send_event(PlayerEvent::Started { track_id });
-+                    let new_state = "play".to_string();
-+                    self.send_event(PlayerEvent::Started { track_id, new_state });
+
+@@ -476,6 +495,7 @@ impl PlayerInternal {
+
+                     self.send_event(PlayerEvent::Started { track_id });
                      self.start_sink();
++                    self.notify_kodi("5", &track_id)
                  } else {
                      warn!("Player::play called from invalid state");
-@@ -486,7 +502,8 @@ impl PlayerInternal {
-                     self.state.playing_to_paused();
- 
+                 }
+@@ -487,6 +507,7 @@ impl PlayerInternal {
+
                      self.stop_sink_if_running();
--                    self.send_event(PlayerEvent::Stopped { track_id });
-+                    let new_state = "pause".to_string();
-+                    self.send_event(PlayerEvent::Stopped { track_id, new_state });
+                     self.send_event(PlayerEvent::Stopped { track_id });
++                    self.notify_kodi("6", &track_id)
                  } else {
                      warn!("Player::pause called from invalid state");
                  }
-@@ -497,7 +514,8 @@ impl PlayerInternal {
-                 | PlayerState::Paused { track_id, .. }
-                 | PlayerState::EndOfTrack { track_id } => {
+@@ -499,6 +520,7 @@ impl PlayerInternal {
                      self.stop_sink_if_running();
--                    self.send_event(PlayerEvent::Stopped { track_id });
-+                    let new_state = "stop".to_string();
-+                    self.send_event(PlayerEvent::Stopped { track_id, new_state });
+                     self.send_event(PlayerEvent::Stopped { track_id });
                      self.state = PlayerState::Stopped;
++                    self.notify_kodi("7", &track_id)
                  }
                  PlayerState::Stopped => {
-diff --git a/src/player_event_handler.rs b/src/player_event_handler.rs
-index 1e682b9..3b478f1 100644
---- a/src/player_event_handler.rs
-+++ b/src/player_event_handler.rs
-@@ -19,18 +19,22 @@ pub fn run_program_on_events(event: PlayerEvent, onevent: &str) -> io::Result<Ch
-         PlayerEvent::Changed {
-             old_track_id,
-             new_track_id,
-+            new_state,
-         } => {
-             env_vars.insert("PLAYER_EVENT", "change".to_string());
-             env_vars.insert("OLD_TRACK_ID", old_track_id.to_base62());
-             env_vars.insert("TRACK_ID", new_track_id.to_base62());
-+            env_vars.insert("STATE", new_state.to_string());
+                     warn!("Player::stop called from invalid state");
+diff --git a/src/main.rs b/src/main.rs
+index 36cd1b5..502cac8 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -168,6 +168,11 @@ fn setup(args: &[String]) -> Setup {
+             "Pregain (dB) applied by volume normalisation",
+             "PREGAIN",
+         )
++        .optflag(
++            "",
++            "notify-kodi",
++            "Notify Kodi",
++        )
+         .optflag(
+             "",
+             "linear-volume",
+@@ -248,6 +253,8 @@ fn setup(args: &[String]) -> Setup {
+         )
+     };
+
++    let notify_kodi = matches.opt_present("notify-kodi");
++
+     let session_config = {
+         let device_id = device_id(&name);
+
+@@ -291,6 +298,7 @@ fn setup(args: &[String]) -> Setup {
+                 .opt_str("normalisation-pregain")
+                 .map(|pregain| pregain.parse::<f32>().expect("Invalid pregain float value"))
+                 .unwrap_or(PlayerConfig::default().normalisation_pregain),
++            notify_kodi: notify_kodi,
          }
--        PlayerEvent::Started { track_id } => {
-+        PlayerEvent::Started { track_id, new_state } => {
-             env_vars.insert("PLAYER_EVENT", "start".to_string());
-             env_vars.insert("TRACK_ID", track_id.to_base62());
-+            env_vars.insert("STATE", new_state.to_string());
-         }
--        PlayerEvent::Stopped { track_id } => {
-+        PlayerEvent::Stopped { track_id, new_state } => {
-             env_vars.insert("PLAYER_EVENT", "stop".to_string());
-             env_vars.insert("TRACK_ID", track_id.to_base62());
-+            env_vars.insert("STATE", new_state.to_string());
-         }
-     }
-     run_program(onevent, env_vars)
+     };
