@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 import json
 import subprocess
 import xbmc
 import xbmcaddon
 import xbmcgui
+
 
 class Monitor(xbmc.Monitor):
 
@@ -18,7 +19,7 @@ class Monitor(xbmc.Monitor):
 
 
 if __name__ == '__main__':
-    if not 'ALSA: Snapcast for Kodi' in json.dumps(xbmc.executeJSONRPC(
+    if not 'ALSA: Shared device' in json.dumps(xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Settings.GetSettings",\
             "params":{"level":"expert","filter":{"section":"system",\
             "category":"audio"}},"id":1}')):

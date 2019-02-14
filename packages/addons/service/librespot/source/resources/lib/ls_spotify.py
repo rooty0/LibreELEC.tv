@@ -57,7 +57,6 @@ class Spotify():
         return {
             'album': _get('', track, 'album', 'name'),
             'artist': _get('', track, 'artists', 0, 'name'),
-            'duration': _get(0, track, 'duration_ms') / 1000,
             'thumb': _get('', track, 'album', 'images', 0, 'url'),
             'title': _get('', track, 'name')
         }
