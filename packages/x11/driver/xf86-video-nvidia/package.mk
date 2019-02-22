@@ -48,7 +48,7 @@ makeinstall_target() {
     cp -P libnvidia-glcore.so.$PKG_VERSION $INSTALL/usr/lib
     cp -P libnvidia-ml.so.$PKG_VERSION $INSTALL/usr/lib
       ln -sf /var/lib/libnvidia-ml.so.1 $INSTALL/usr/lib/libnvidia-ml.so.1
-    cp -P tls/libnvidia-tls.so.$PKG_VERSION $INSTALL/usr/lib
+    cp -P libnvidia-tls.so.$PKG_VERSION $INSTALL/usr/lib
   # rename to not conflicting with Mesa libGL.so
     cp -P libGL.so.$PKG_VERSION $INSTALL/usr/lib/libGL_nvidia.so.1
 
