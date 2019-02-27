@@ -3,15 +3,15 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="librespot"
-PKG_VERSION="96557b4ec1c45413cdf34673695f1269f99e3545"
-PKG_SHA256="09fe8f8de50d25e460bdc75d02239961336ac4db837509386ac17057b00cc49a"
-PKG_VERSION_DATE="2018-11-07"
+PKG_VERSION="daeeeaa122fc2d71edf11e562e23038db4210b39"
+PKG_SHA256="e9ebb8ca09c850598ae8c222bdab44e7d8321cb3c36017ba8e17a41db418c06e"
+PKG_VERSION_DATE="2019-02-22"
 PKG_REV="115"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/librespot-org/librespot/"
 PKG_URL="https://github.com/librespot-org/librespot/archive/$PKG_VERSION.zip"
-PKG_DEPENDS_TARGET="toolchain avahi pulseaudio rust"
+PKG_DEPENDS_TARGET="toolchain avahi pulseaudio pyalsaaudio rust"
 PKG_SECTION="service"
 PKG_SHORTDESC="Librespot: play Spotify through LibreELEC using a Spotify app as a remote"
 PKG_LONGDESC="Librespot ($PKG_VERSION_DATE) plays Spotify through LibreELEC using the open source librespot library using a Spotify app as a remote."
@@ -19,8 +19,7 @@ PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Librespot"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REQUIRES="service.audio-tools:0.0.0"
+PKG_ADDON_TYPE="xbmc.service.library"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 configure_target() {
@@ -36,11 +35,15 @@ make_target() {
 }
 
 addon() {
+  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID"
+  cp "$(get_build_dir pyalsaaudio)/.install_pkg/usr/lib/$PKG_PYTHON_VERSION/site-packages/alsaaudio.so" \
+     "$ADDON_BUILD/$PKG_ADDON_ID"
+
   mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/bin"
-    cp "$PKG_BUILD/.$TARGET_NAME"/*/release/librespot  \
-       "$ADDON_BUILD/$PKG_ADDON_ID/bin"
+  cp "$PKG_BUILD/.$TARGET_NAME"/*/release/librespot  \
+     "$ADDON_BUILD/$PKG_ADDON_ID/bin"
 
   mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/lib"
-    cp "$(get_build_dir avahi)/avahi-compat-libdns_sd/.libs/libdns_sd.so.1" \
-       "$ADDON_BUILD/$PKG_ADDON_ID/lib"
+  cp "$(get_build_dir avahi)/avahi-compat-libdns_sd/.libs/libdns_sd.so.1" \
+     "$ADDON_BUILD/$PKG_ADDON_ID/lib"
 }

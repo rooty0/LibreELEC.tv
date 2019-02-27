@@ -1,7 +1,5 @@
 115
-- Rework Kodi hooks to sync info tags with playback in Kodi mode
-- Rework Python, shell scripts and system.d
-- Use shared device
+- Update to daeeeaa (22-02-2019)
 
 114
 - Fix discovery mode setting
