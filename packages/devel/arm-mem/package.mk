@@ -3,8 +3,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="arm-mem"
-PKG_VERSION="ea0bde27d823bd27f2e38ea0913f124b540c5ecc"
-PKG_SHA256="1ec05c7878a01fde9e31a1b64ff9edf223b03761ceee1f695246a50e2a4326da"
+PKG_VERSION="a3277ce"
+PKG_SHA256="f571bbc43e3670c8f52447eb885f0c561ed039bcfb692678681899d7df13b165"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bavison/arm-mem"
