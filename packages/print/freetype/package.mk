@@ -25,3 +25,7 @@ pre_configure_target() {
       sh autogen.sh
     )
 }
+
+post_makeinstall_target() {
+  cp -P "${PKG_BUILD}/.${TARGET_NAME}/freetype-config" "${SYSROOT_PREFIX}/usr/bin"
+}
