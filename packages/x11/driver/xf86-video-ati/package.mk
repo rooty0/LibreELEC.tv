@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="xf86-video-ati"
-PKG_VERSION="18.1.0"
-PKG_SHA256="6c335f423c1dc3d904550d41cb871ca4130ba7037dda67d82e3f1555e1bfb9ac"
+PKG_VERSION="19.0.0"
+PKG_SHA256="dd907d318884bb6e81e7e62da7bb34af26aeeed3a81c21e0b46a4f3cae3ff457"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
