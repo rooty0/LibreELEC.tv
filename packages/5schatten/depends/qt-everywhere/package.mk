@@ -2,12 +2,12 @@
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
 
 PKG_NAME="qt-everywhere"
-PKG_VERSION="5.12.0"
-PKG_SHA256="356f42d9087718f22f03d13d0c2cdfb308f91dc3cf0c6318bed33f2094cd9d6c"
+PKG_VERSION="5.12.2"
+PKG_SHA256="59b8cb4e728450b21224dcaaa40eb25bafc5196b6988f2225c394c6b7f881ff5"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="http://download.qt.io/archive/qt/${PKG_VERSION%.*}/$PKG_VERSION/single/$PKG_NAME-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo libpng pcre2 sqlite zlib freetype gstreamer gst-plugins-base gst-plugins-good gst-libav"
+PKG_DEPENDS_TARGET="toolchain libjpeg-turbo libpng pcre2 sqlite zlib freetype libxkbcommon gstreamer gst-plugins-base gst-plugins-good gst-libav"
 PKG_LONGDESC="A cross-platform application and UI framework"
 
 pre_configure_target() {
