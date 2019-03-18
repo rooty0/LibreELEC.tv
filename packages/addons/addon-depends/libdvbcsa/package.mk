@@ -19,7 +19,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-sysroot=$SYSR
 if target_has_feature neon; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-neon"
 elif [ "$TARGET_ARCH" = x86_64  ]; then
-  if target_has_feature ssse3; then
+  if target_has_feature avx2; then
+    PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-avx2"
+  elif target_has_feature ssse3; then
     PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-ssse3"
   elif target_has_feature sse2; then
     PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse2"
