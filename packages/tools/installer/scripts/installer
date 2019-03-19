@@ -260,7 +260,7 @@ do_install_quick() {
     sync
 
     # configuring bootloader
-    msg_progress_install "80" "Setup bootloader with boot label = $DISKLABEL_SYSTEM and disk label = $DISKLABEL_STORAGE"
+    msg_progress_install "80" "Setup bootloader with boot label = $DISKLABEL_SYSTEM and disk label = $DISKLABEL_STORAGE . Disable security patches since that does not affects LibreELECT also bumps up performance"
     mkdir -p $TMPDIR/part1/EFI/BOOT
     cat << EOF > $TMPDIR/part1/syslinux.cfg
 DEFAULT linux
@@ -268,7 +268,7 @@ PROMPT 0
 
 LABEL linux
  KERNEL /KERNEL
- APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS quiet
+ APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS quiet pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier
 EOF
 
     cat << EOF > $TMPDIR/part1/EFI/BOOT/grub.cfg
@@ -277,7 +277,7 @@ set default="LibreELEC"
 
 menuentry "LibreELEC" {
 	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE quiet
+	linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE quiet pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier
 }
 EOF
 
