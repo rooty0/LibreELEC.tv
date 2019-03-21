@@ -84,7 +84,7 @@ pre_configure_target() {
 
 configure_target() {
   ./configure --prefix="/usr" \
-              --cpu="$TARGET_CPU" \
+              --cpu="skylake" \
               --arch="$TARGET_ARCH" \
               --enable-cross-compile \
               --cross-prefix="$TARGET_PREFIX" \
@@ -114,7 +114,6 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --disable-programs \
               --enable-avdevice \
               --enable-avcodec \
               --enable-avformat \
@@ -187,7 +186,8 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $PKG_FFMPEG_FPU \
-              --disable-symver
+              --disable-symver \
+	      --extra-version="rooty.optimized1"
 }
 
 post_makeinstall_target() {
