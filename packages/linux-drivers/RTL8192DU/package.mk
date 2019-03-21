@@ -3,6 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="RTL8192DU"
+PKG_VERSION="3105cd3179d5e60a7aa675611a3592a45b29bfcb"
+PKG_SHA256="0a19e86192418d4179def917a9cea3aa0f2f2da7c44a520c085b9d78d9d2c09e"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8192du"
 PKG_URL="https://github.com/lwfinger/rtl8192du/archive/$PKG_VERSION.tar.gz"
@@ -10,15 +12,6 @@ PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_LONGDESC="Realtek RTL8192DU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
-
-if [ "${PROJECT}" = "Amlogic_Legacy" ]; then
-  # Known good version for Kernel 3.14.29
-  PKG_VERSION="31a276df70c7cdbb534cf29de31cfc2d59c71eb8"
-  PKG_SHA256="9dd97f3fbfc31714d8b2cba4966051371f9c0515cff78da13d6e2c98506ac888"
-else
-  PKG_VERSION="3105cd3179d5e60a7aa675611a3592a45b29bfcb"
-  PKG_SHA256="0a19e86192418d4179def917a9cea3aa0f2f2da7c44a520c085b9d78d9d2c09e"
-fi
 
 pre_make_target() {
   unset LDFLAGS
