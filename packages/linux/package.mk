@@ -30,15 +30,15 @@ case "$LINUX" in
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   raspberrypi)
-    PKG_VERSION="414511a0cc482de90eec5791b7015b2c2d99408e" # 4.19.28
-    PKG_SHA256="9af2e64455a52222a01d5768cd2d682c574573d81869b7e46c58900fc73dbd64"
+    PKG_VERSION="1bcd1a4940d3a4c4a793086ebe1b6b0afb4fff97" # 5.0.3
+    PKG_SHA256="1e56625e2952877ebcc1ec51ca4d04832f2b7528436c04d621eec80f1a991681"
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="4.19.29"
-    PKG_SHA256="0d09e5c33e724fa0490cd0ec111988d50b5f827001149cb9c7a2041b383fe7f3"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_VERSION="5.0.4"
+    PKG_SHA256="8f853aa05c496e27452da5e0ca74c56fab447cb2c24f047c55fd1d13d8bdea68"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac

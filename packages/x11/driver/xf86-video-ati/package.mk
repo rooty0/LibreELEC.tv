@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="xf86-video-ati"
-PKG_VERSION="19.0.0"
-PKG_SHA256="dd907d318884bb6e81e7e62da7bb34af26aeeed3a81c21e0b46a4f3cae3ff457"
+PKG_VERSION="19.0.1"
+PKG_SHA256="5cb6015d8664546ad1311bc9c363d7bc41ebf60e7046ceb44dd38e5b707961b0"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
@@ -12,7 +12,8 @@ PKG_DEPENDS_TARGET="toolchain xorg-server"
 PKG_LONGDESC="The ati driver supports various ATi, know AMD, video chips."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-glamor --with-xorg-module-dir=$XORG_PATH_MODULES"
+PKG_CONFIGURE_OPTS_TARGET="--enable-glamor \
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/etc/X11
