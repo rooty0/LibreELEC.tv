@@ -1,12 +1,3 @@
 <advancedsettings>
-  <video>
-    <latency>
-      <delay>0</delay>
-      <refresh>
-        <min>23</min>
-        <max>24</max>
-        <delay>175</delay>
-      </refresh>
-    </latency>
-  </video>
+  <splash>false</splash>
 </advancedsettings>
